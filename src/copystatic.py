@@ -10,7 +10,7 @@ def copy_static(source: str, destination: str) -> None:
     else:
         shutil.rmtree(destination)
         os.mkdir(destination)
-        print(f"{destination} directory deleted. Starting recreation")
+        print(f"{destination} directory deleted. Recreating...")
     for item in os.listdir(source):
         branch = os.path.join(source, item)
         copy_destination = os.path.join(destination, item)
@@ -42,3 +42,6 @@ def generate_page(from_path, template_path, dest_path):
     os.makedirs(parent_dirs, exist_ok=True)
     with open(f"{parent_dirs}/{file_name}", "w") as new_file:
         new_file.write(final_template)
+
+def generate_pages_recursive(dir_path_content, template_path, dest_dir_path):
+    pass
