@@ -40,27 +40,7 @@ class LeafNode(HTMLNode):
             raise ValueError("Invalid HTML: no value")
         if self.tag is None:
             return self.value
-        match self.tag:
-            case "a":
-                return f"<a{self.props_to_html()}>{self.value}</a>"
-            case "img":
-                return f"<img{self.props_to_html()}>"
-            case "blockquote":
-                return f"<blockquote>\n{self.value}\n</blockquote>"
-            case "ul":
-                li = self.value.splitlines()
-                li_items = ""
-                for line in li:
-                    li_items += f"  <li>{line}</li>\n"
-                return f"\n{li_items}"
-            case "ol":
-                li = self.value.splitlines()
-                li_items = ""
-                for line in li:
-                    li_items += f"  <li>{line}</li>\n"
-                return f"\n{li_items}"
-            case _:
-                return f"<{self.tag}>{self.value}</{self.tag}>"
+        return f"<{self.tag}{self.props_to_html()}>{self.value}</{self.tag}>"
             
 class ParentNode(HTMLNode):
     def __init__(self, tag: str = None, value: str = None, children: list = None, props: dict = None):

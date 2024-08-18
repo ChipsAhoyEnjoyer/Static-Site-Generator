@@ -1,4 +1,4 @@
-import htmlnode, re
+import re
 
 from textnode import TextNode, text_type_bold, text_type_text, text_type_italic, text_type_link, text_type_image, text_type_code
 
@@ -10,23 +10,6 @@ def to_html_helper_func(children: list):
     else:
         html_str_repr += lst_of_children[0].to_html() + to_html_helper_func(lst_of_children[1:])
     return html_str_repr
-
-def text_node_to_html_node(text_node: object):
-    match text_node.text_type:
-        case "text":
-            return htmlnode.LeafNode(None, text_node.text)
-        case "bold":
-            return htmlnode.LeafNode("b", text_node.text)
-        case "italic":
-            return htmlnode.LeafNode("i", text_node.text)
-        case "code":
-            return htmlnode.LeafNode("code", text_node.text)
-        case "link":
-            return htmlnode.LeafNode("a", text_node.text, props={"href": text_node.url})
-        case "image":
-            return htmlnode.LeafNode("img", None, props={"src": text_node.url, "alt": text_node.text})
-        case _:
-            raise ValueError(f"Invalid text type: {text_node.text_type}")
         
 def split_nodes_delimiter(old_nodes: list, delimiter: str, text_type: str):
     new_nodes = []

@@ -57,39 +57,6 @@ class TestLeafNode(unittest.TestCase):
 		node_link = LeafNode("a", "Dummy link", children=None, props={"href": "www.dummylink.com"})
 		self.assertEqual(node_link.to_html(), "<a href='www.dummylink.com'>Dummy link</a>")
 
-	def test_to_html2(self):
-		node_ol = LeafNode("ol", "item1\nitem2\n")
-		self.assertEqual(node_ol.to_html(), "\n  <li>item1</li>\n  <li>item2</li>\n")
-		node_ul = LeafNode("ul", "item1\nitem2\n")
-		self.assertEqual(node_ul.to_html(), "\n  <li>item1</li>\n  <li>item2</li>\n")
-
-	def test_to_html3(self):
-		node_blockquote = LeafNode("blockquote", "item1")
-		self.assertEqual(node_blockquote.to_html(), "<blockquote>\nitem1\n</blockquote>")
-
-	def test_to_html4(self):
-		node_h3 = LeafNode("h3", "item1")
-		self.assertEqual(node_h3.to_html(), "<h3>item1</h3>")
-		node_p = LeafNode("p", "item1")
-		self.assertEqual(node_p.to_html(), "<p>item1</p>")
-		node_code = LeafNode("code", "item1")
-		self.assertEqual(node_code.to_html(), "<code>item1</code>")
-		node_bold = LeafNode("b", "item1")
-		self.assertEqual(node_bold.to_html(), "<b>item1</b>")
-
-	def test_text_node_to_html_node(self):
-		node_text = TextNode(text_type_text, "item 1")
-		leaf_node_from_text_node = text_node_to_html_node(node_text)
-		self.assertEqual(leaf_node_from_text_node.__repr__(), "LeafNode(None, item 1, None)")
-
-		node_link = TextNode(text_type_link, "Google", "www.google.com")
-		leaf_node_from_link_node = text_node_to_html_node(node_link)
-		self.assertEqual(leaf_node_from_link_node.to_html(), "<a href='www.google.com'>Google</a>")
-
-		node_img = TextNode(text_type_image, "Dolphin image", "www.jotarosfavimage.com")
-		leaf_node_from_img_node = text_node_to_html_node(node_img)
-		self.assertEqual(leaf_node_from_img_node.to_html(), "<img src='www.jotarosfavimage.com' alt='Dolphin image'>")
-
 
 class TestParentNode(unittest.TestCase):
 	def test_to_html_single_child(self):
