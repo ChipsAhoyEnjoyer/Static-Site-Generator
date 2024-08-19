@@ -1,7 +1,7 @@
-from copystatic import copy_static, generate_page
+from copystatic import copy_static, generate_pages_recursive, generate_page
 
 def main():
     copy_static(source="./static", destination="./public")
-    generate_page(from_path="content/index.md", dest_path="public/index.html", template_path="template.html")
+    generate_pages_recursive(dir_path_content="./content", dest_dir_path="./public", template_path="template.html")
 
 main()

@@ -1,4 +1,4 @@
-import os, shutil
+import os, shutil, pathlib
 
 from block_md import markdown_to_blocks, block_to_block_type, raw_md_to_text, markdown_to_html_node
 
@@ -37,11 +37,19 @@ def generate_page(from_path, template_path, dest_path):
     with open(template_path, "r") as template:
         template_str = template.read()
         final_template = template_str.replace("{{ Title }}", title).replace("{{ Content }}", html_file)
-    parent_dirs = os.path.dirname(dest_path)
-    file_name = dest_path.split("/")[-1]
-    os.makedirs(parent_dirs, exist_ok=True)
-    with open(f"{parent_dirs}/{file_name}", "w") as new_file:
+    os.makedirs(dest_path, exist_ok=True)
+    new_file = pathlib.Path(from_path).stem + ".html"
+    with open(f"{dest_path}/{new_file}", "w") as new_file:
         new_file.write(final_template)
 
 def generate_pages_recursive(dir_path_content, template_path, dest_dir_path):
-    pass
+    if not os.path.exists(dir_path_content):
+        return
+    for path in os.listdir(dir_path_content):
+        branch = os.path.join(dir_path_content, path)
+        destination = os.path.join(dest_dir_path, path)
+        suffix = pathlib.Path(branch).suffix
+        if os.path.isfile(branch) and suffix == ".md":
+            generate_page(branch, template_path, dest_dir_path)
+        else:
+            generate_pages_recursive(branch, template_path, destination)
